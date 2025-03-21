@@ -2,6 +2,7 @@
 title = stockvision
 package.name = stockVision
 package.domain = org.aritra
+source.dir = .
 source.include_exts = py,png,jpg,jpeg,kv,txt
 version = 1.0
 requirements = python3, kivy==2.3.1, yfinance, pandas, numpy, requests,pillow, certifi
