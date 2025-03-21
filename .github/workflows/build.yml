@@ -10,10 +10,35 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
 
+      - name: Install Docker (if missing)
+        run: |
+          sudo apt update
+          sudo apt install -y docker.io
+          sudo systemctl start docker
+          sudo systemctl enable docker
+
+      - name: Pull Kivy Buildozer Image with Retry
+        run: |
+          max_retries=3
+          attempt=1
+          while [ $attempt -le $max_retries ]; do
+            if docker pull kivy/buildozer:latest; then
+              break
+            else
+              echo "Attempt $attempt failed. Retrying..."
+              attempt=$((attempt + 1))
+              sleep 5
+            fi
+          done
+          if [ $attempt -gt $max_retries ]; then
+            echo "Failed to pull kivy/buildozer image after $max_retries attempts."
+            exit 1
+          fi
+
       - name: Run Buildozer in Docker
         run: |
           docker run --rm -v ${{ github.workspace }}:/home/user/hostcwd -w /home/user/hostcwd kivy/buildozer buildozer -v android debug
-          
+
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
