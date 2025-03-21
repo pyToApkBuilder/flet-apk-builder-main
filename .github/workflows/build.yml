@@ -5,53 +5,15 @@ jobs:
   build-android:
     name: Build for Android
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
+      - name: Checkout Code
         uses: actions/checkout@v2
 
-      - name: Install Dependencies
+      - name: Run Buildozer in Docker
         run: |
-          sudo apt update
-          sudo apt install -y git zip unzip python3-pip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo6 cmake libffi-dev libssl-dev automake
-          pip install --user --upgrade Cython virtualenv buildozer
-          echo "$HOME/.local/bin" >> $GITHUB_PATH
-
-      - name: Install Android SDK
-        run: |
-          sudo apt install -y default-jdk
-          wget https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip -O android_cmdline_tools.zip
-          mkdir -p $HOME/android-sdk/cmdline-tools
-          unzip android_cmdline_tools.zip -d $HOME/android-sdk/cmdline-tools
-          mv $HOME/android-sdk/cmdline-tools/cmdline-tools $HOME/android-sdk/cmdline-tools/latest
-          echo "export ANDROID_HOME=$HOME/android-sdk" >> $GITHUB_ENV
-          echo "export PATH=$PATH:$HOME/android-sdk/cmdline-tools/latest/bin:$HOME/android-sdk/platform-tools:$HOME/android-sdk/emulator:$HOME/android-sdk/build-tools" >> $GITHUB_ENV
-          source $GITHUB_ENV
-          yes | $HOME/android-sdk/cmdline-tools/latest/bin/sdkmanager --licenses
-          $HOME/android-sdk/cmdline-tools/latest/bin/sdkmanager --install \
-            "platform-tools" \
-            "build-tools;34.0.0" \
-            "platforms;android-34" \
-            "cmdline-tools;latest" \
-            "ndk;25.2.9519653" \
-            "system-images;android-34;default;x86_64"
-
-      - name: Cache pip packages
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/buildozer.spec') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
-
-      - name: Set up Java Environment
-        run: |
-          export JAVA_HOME=/usr/lib/jvm/default-java
-          export PATH=$JAVA_HOME/bin:$PATH
-
-      - name: Build APK
-        run: |
-          buildozer -v android debug --accept-license
-
+          docker run --rm -v ${{ github.workspace }}:/home/user/hostcwd -w /home/user/hostcwd kivy/buildozer buildozer -v android debug
+          
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
