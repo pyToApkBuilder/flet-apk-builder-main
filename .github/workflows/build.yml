@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Buildozer dependencies
         run: |
@@ -17,7 +17,7 @@ jobs:
           echo "::add-path::$HOME/.local/bin"
 
       - name: Cache pip packages
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-pip-${{ hashFiles('**/buildozer.spec') }}
@@ -32,7 +32,7 @@ jobs:
           yes | buildozer -v android debug
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.3.4
         with:
           name: package
           path: bin/*.apk
