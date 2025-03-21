@@ -1,10 +1,10 @@
 [app]
-title = YourAppName
-package.name = yourappname
+title = stockvision
+package.name = stockVision
 package.domain = org.aritra
 source.include_exts = py,png,jpg,jpeg,kv,txt
 version = 1.0
-requirements = python3, kivy==2.3.1, yfinance, pandas, numpy, requests, certifi
+requirements = python3, kivy==2.3.1, yfinance, pandas, numpy, requests,pillow, certifi
 orientation = portrait
 osx.kivy_version = 2.3.1
 
