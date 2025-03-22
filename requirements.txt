@@ -1,2 +1,2 @@
 flet
-yfinance
+yfinance==0.2.55
