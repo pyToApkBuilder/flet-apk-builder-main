@@ -8,10 +8,10 @@ authors = [
     { name = "aritracodespy", email = "you@example.com" }
 ]
 dependencies = [
-  "flet==0.27.6",
-  "yfinance==0.2.55",
-  "pandas==2.2.3",
-  "numpy==2.2.4"
+  "flet",
+  "yfinance",
+  "pandas",
+  "numpy"
 ]
 
 [tool.flet]
