@@ -1,6 +1,17 @@
 import flet as ft
-import yfinance as yf
+from tradingview_ta import TA_Handler, Interval
 
+def get_close(symbol, exchange="NSE", screener="india"):
+    try:
+        handler = TA_Handler(
+           symbol=symbol,
+           exchange=exchange,
+           screener=screener,
+           interval=Interval.INTERVAL_1_DAY
+           )
+        return handler.get_analysis().indicators["close"]
+    except Exception as e:
+        return e
 
 def main(page: ft.Page):
     page.title= "stock viewer"
@@ -11,10 +22,8 @@ def main(page: ft.Page):
             sym = str(st_in.value.strip().upper())
             ress.value = sym
             try:
-                data = yf.Ticker(sym).history(period="1y")
-                inf= yf.Ticker(sym).info
-
-                ress.value= f"{inf["longName"]} : {data.iloc[-1].Close:.2f}"
+                close = get_close(sym)
+                ress.value = close
                 st_in.value=""
             except Exception as er:
                 ress.value = f"{sym}: {er}"
