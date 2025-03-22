@@ -9,7 +9,7 @@ authors = [
 ]
 dependencies = [
   "flet",
-  "yfinance==0.2.54",
+  "yfinance",
   "pandas",
   "numpy",
   "peewee"
