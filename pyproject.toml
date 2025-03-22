@@ -7,9 +7,6 @@ requires-python = ">=3.9"
 authors = [
     { name = "aritracodespy", email = "you@example.com" }
 ]
-dependencies = [
-  "flet"
-]
 
 [tool.flet]
 # org name in reverse domain name notation, e.g. "com.mycompany".
