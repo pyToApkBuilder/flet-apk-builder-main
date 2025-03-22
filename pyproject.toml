@@ -11,7 +11,7 @@ dependencies = [
   "flet==0.27.6",
   "yfinance==0.2.54",
   "pandas==2.2.2",
-  "numpy==2.0.2",
+  "numpy==2.2.2",
   "peewee==3.17.9"
 ]
 
