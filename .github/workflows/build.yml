@@ -50,12 +50,15 @@ jobs:
     - name: Install flet-cli ${{ env.FLET_CLI_VERSION }}
       run: |
         python -m pip install --upgrade pip
-        pip install --upgrade yfinance
         pip install flet-cli==$FLET_CLI_VERSION
+        pip install yfinance flet
 
     - name: Flet Build APK
       run: |
         flet build apk --verbose --build-number=$BUILD_NUMBER --build-version=$BUILD_VERSION --android-permissions android.permission.INTERNET=True
+ 
+    - name: List Installed Packages
+      run: pip list
 
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v4.3.4  # https://github.com/marketplace/actions/upload-a-build-artifact
