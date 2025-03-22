@@ -12,7 +12,7 @@ dependencies = [
   "yfinance==0.2.54",
   "pandas==2.2.3",
   "numpy==2.2.2",
-  "peewee==3.16.9"
+  "peewee==3.16.2"
 ]
 
 [tool.flet]
