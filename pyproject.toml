@@ -11,8 +11,7 @@ dependencies = [
   "flet",
   "yfinance",
   "pandas",
-  "numpy",
-  "peewee"
+  "numpy"
 ]
 
 [tool.flet]
