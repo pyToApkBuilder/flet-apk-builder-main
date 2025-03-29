@@ -11,16 +11,10 @@ def date():
     return datetime.now(india_tz).strftime('%Y-%m-%d %H:%M:%S')
 
 def percentage_difference(num1, num2):
-  if not isinstance(num1, (int, float)) or not isinstance(num2, (int, float)):
-    return None
-
-  if num1 == 0 and num2 == 0:
-    return 0.0
-
   try:
     return ((num1 - num2)/num2)*100
-  except ZeroDivisionError:
-      return float('inf')
+  except:
+      return 0
 
 
 def get_close(symbol, exchange="NSE", screener="india"):
@@ -77,7 +71,7 @@ def main(page: ft.Page):
                     raise IndexError("Incomplete stock data.")
 
                 stock_name = listitem[0][0]
-                saved_price = listitem[1]
+                saved_price = float(listitem[1])
                 saved_date = listitem[2]
                 saved_direction = listitem[3]
                 current_data = get_close(stock_name) if len(listitem[0]) == 1 else get_close(listitem[0][0], listitem[0][1], listitem[0][2])
@@ -85,15 +79,15 @@ def main(page: ft.Page):
                 if current_data is None:
                     continue
 
-                current_price = current_data[0]['close']
+                current_price = float(current_data[0]['close'])
                 day_change = current_data[0]["change"]
 
                 if dropdown.value.lower() == "long":
-                    change = percentage_difference(current_price, saved_price)
+                    m_change = percentage_difference(current_price, saved_price)
                 elif dropdown.value.lower() == "short":
-                    change = percentage_difference(saved_price, current_price)
+                    m_change = percentage_difference(saved_price, current_price)
                 else:
-                    change = 0
+                    m_change = 0
 
                 result_column.controls.append(
                     ft.Card(
@@ -118,7 +112,7 @@ def main(page: ft.Page):
                                     ft.Text(f"Current: {current_price}")
                                 ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
                                 ft.Row([
-                                    ft.Text(f"Day Change: {day_change:.2f}% | Movement: {change:.2f}%"),
+                                    ft.Text(f"Day Change: {day_change:.2f}% | Movement: {m_change:.2f}%"),
                                     ft.IconButton(icon=ft.Icons.DELETE, on_click=delete_card, data=listitem)
                                 ], alignment=ft.MainAxisAlignment.CENTER)
                             ])
