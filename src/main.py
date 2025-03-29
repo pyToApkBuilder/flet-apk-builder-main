@@ -87,7 +87,13 @@ def main(page: ft.Page):
 
                 current_price = current_data[0]['close']
                 day_change = current_data[0]["change"]
-                change = percentage_difference(current_price, saved_price) if dropdown.value == "Long" else percentage_difference(saved_price,current_price)
+
+                if dropdown.value.lower() == "long":
+                    change = percentage_difference(current_price, saved_price)
+                elif dropdown.value.lower() == "short":
+                    change = percentage_difference(saved_price, current_price)
+                else:
+                    change = 0
 
                 result_column.controls.append(
                     ft.Card(
