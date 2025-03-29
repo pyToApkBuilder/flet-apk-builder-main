@@ -82,9 +82,9 @@ def main(page: ft.Page):
                 current_price = float(current_data[0]['close'])
                 day_change = current_data[0]["change"]
 
-                if dropdown.value.lower() == "long":
+                if saved_direction.lower() == "long":
                     m_change = percentage_difference(current_price, saved_price)
-                elif dropdown.value.lower() == "short":
+                elif saved_direction.lower() == "short":
                     m_change = percentage_difference(saved_price, current_price)
                 else:
                     m_change = 0
