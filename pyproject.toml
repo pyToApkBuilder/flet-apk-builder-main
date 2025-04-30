@@ -23,11 +23,9 @@ company = "Flet_aritracodespy"
 # copyright text to display in about app dialogs
 copyright = "Copyright (C) 2025 by Flet"
 
-app = "main.py"
+#app = "main.py"
 
-assets = [
-    "stocks.json"      # JSON file
-]
+#assets = ["stocks.json"]
 permissions = ["internet"]
 
 [tool.flet.app]
